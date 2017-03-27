@@ -1,0 +1,111 @@
+---
+title: "STA286 Lecture 26"
+author: "Neil Montgomery"
+date: "Last edited: `r format(Sys.time(), '%Y-%m-%d %H:%M')`"
+output: 
+  beamer_presentation:
+    keep_tex: TRUE
+    incremental: TRUE
+#    df_print: tibble
+    fig_caption: FALSE
+classoption: aspectratio=169
+header-includes:
+- \renewcommand{\le}{\leqslant}
+- \renewcommand{\ge}{\geqslant}
+- \renewcommand\P[1]{P{\left(#1\right)}}
+- \newcommand\F[1]{F_{\tiny{#1}}}
+- \newcommand\f[1]{f_{\tiny{#1}}}
+- \newcommand\p[1]{p_{\tiny{#1}}}
+- \newcommand\M[1]{M_{\tiny{#1}}}
+- \newcommand\V[1]{\text{Var}\!\left(#1\right)}
+- \newcommand\E[1]{E\!\left(#1\right)}
+- \newcommand\N[1]{N_{\tiny{#1}}}
+- \newcommand\ol{\overline}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE,
+                      dev = 'pdf')
+options(tibble.width=70, tibble.print_max=5)
+library(tidyverse)
+```
+
+## the patented four-step procedure outline for confidence intervals
+
+The goal is to get $\P{\hat\theta_L < \theta < \hat\theta_U} = 1-\alpha$
+
+1. Decide what $\theta$ is.
+
+2. Decide what $\hat\theta$ is (depends on how dataset was collected.)
+
+3. Compute $\V{\hat\theta}$.
+
+4. Deal with unknowns in part 3.\,and settle for $\widehat{\text{Var}}\left(\hat\theta\right)$
+
+\pause We've handled the one- and two-normal sample cases.
+
+## one normal sample masquerading as two - I
+
+In the two-sample case, the samples are assumped to be independent, which was crucial for the calculation of $\V{\hat\theta}$.
+
+It is possible (common, even) to collect a sample $X_{11},\ldots,X_{1n}$ from $N(\mu_1, \sigma_1)$ and another sample $X_{21},\ldots,X_{2n}$ from $N(\mu_2, \sigma_2)$, where $X_{1i}$ and ${X_{2i}}$ are measured on the same ($i^{th}$) "experimental unit".
+
+\pause We might still be interested in the parameter $\theta = \mu_D = \mu_1 - \mu_2$.
+
+\pause We will still use the "obvious" $\hat\theta = \ol{X}_1 - \ol{X}_2$, in a sense.
+
+\pause But the better way to express $\hat\theta$ is to consider the differences $D_i = X_{1i} - X_{2i}$ and use $\ol{D}$.
+
+\pause We still have $\ol{D}$ normal with mean $E(D_i) = \mu_1-\mu_2$. But the variance of $\ol{D}$ will be $\V{D_i}/n$, where:
+$$\V{D_i} = \sigma^2_D = \sigma_1^2 + \sigma_2^2 - 2\text{Cov}(X_{i1}, X_{i2})$$
+
+## one normal sample masquerading as two - II
+
+We treat the "two" samples for what they are, which is really one sample $D_1,D_2,\ldots,D_n$ i.i.d. $N(\mu_1-\mu_2, \sigma_D)$.
+
+\pause And we already know how to analyze the one independent sample case.
+
+\pause The only challenge seems to be do determine when there are two independent samples, or only one sample of differences.
+
+## example - 2007 exam
+
+![](exam2007.PNG)
+
+## example - 2012 MIE237 exam - I
+
+![](m_1.PNG)
+
+## example - 2012 MIE237 exam - II
+
+![](m_2.PNG)
+
+## example - 2012 MIE237 exam - III
+
+![](m_3.PNG)
+
+## example - 2012 MIE237 exam - IV
+
+![](m_4.PNG)
+
+## when the parameter is a single probability 
+
+We have solved the problem of estimating $\mu$ from a single normal sample.
+
+\pause It's common to have a variable in the dataset that only takes on two values, which we would model using a Bernoulli$(p)$ distribution (effectively treating the values as 0's and 1's.)
+
+The sample is the sequence of random 0's and 1's: $X_1,X_2,\ldots,X_n$ i.i.d. Bernoulli$(p)$.
+
+Patented 4-step procedure:
+
+1. $\theta = p$
+
+2. The "obvious" estimator is $\ol{X}$, which we will more commonly call in this special case the "sample proportion" or $\hat{p}$. This is an unbiased estimator for $p$.
+
+3. The variance is $\V{\hat{p}} = \frac{p(1-p)}{n}$, which also contains $p$. 
+
+4. To deal with the unknown $p$, we just use the sample itself and plug in $\hat{p}$ (!)
+
+## when the parameter is a single probability
+
+As long as $n\hat{p}$ and $n(1-\hat{p})$ both exceed 5, we know the following is a good approximation:
+$$\frac{\hat{p} - p}{\sqrt{\frac{\hat p(1-\hat p)}{n}}} \sim N(0,1)$$
