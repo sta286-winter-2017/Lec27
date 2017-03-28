@@ -57,7 +57,7 @@ It is possible (common, even) to collect a sample $X_{11},\ldots,X_{1n}$ from $N
 \pause But the better way to express $\hat\theta$ is to consider the differences $D_i = X_{1i} - X_{2i}$ and use $\ol{D}$.
 
 \pause We still have $\ol{D}$ normal with mean $E(D_i) = \mu_1-\mu_2$. But the variance of $\ol{D}$ will be $\V{D_i}/n$, where:
-$$\V{D_i} = \sigma^2_D = \sigma_1^2 + \sigma_2^2 - 2\text{Cov}(X_{i1}, X_{i2})$$
+$$\V{D_i} = \sigma^2_D = \sigma_1^2 + \sigma_2^2 - 2\text{Cov}(X_{1i}, X_{2i})$$
 
 ## one normal sample masquerading as two - II
 
@@ -109,3 +109,15 @@ Patented 4-step procedure:
 
 As long as $n\hat{p}$ and $n(1-\hat{p})$ both exceed 5, we know the following is a good approximation:
 $$\frac{\hat{p} - p}{\sqrt{\frac{\hat p(1-\hat p)}{n}}} \sim N(0,1)$$
+
+\pause This gives us our desired expression:
+$$\P{-1.96 < \frac{\hat{p} - p}{\sqrt{\frac{\hat p(1-\hat p)}{n}}} < 1.96} \approx 0.95$$
+
+\pause giving us a 95\% confidence interval for the unknown probability:
+$$\hat p \pm 1.96 \sqrt{\frac{\hat p(1-\hat p)}{n}}$$
+which is yet another example of my patented C.I. formula.
+
+## example
+
+Work Team Alpha inspects 8000 gas meters. They find 87 defective ones. Produce a 95\% confidence interval for the probability that a gas meter is defective.
+
